@@ -43,16 +43,27 @@ Class TcCore
 		WinGet, $hwnd , ID, ahk_class TTOTAL_CMD
 		this._hwnd := $hwnd
 	}
-
+	/*---------------------------------------
+		INI FILE
+	-----------------------------------------
+	*/
 	/** Set ini file as property
 	 *  
-	 *  @param	string	$ini_file	filename to set E.G.: "wincmd.ini" WILL BE this._wincmd_ini
+	 * @param	string	$ini_file	Relative path to file in Total Commander 
+	 * @param	string	$key	Key to save to this object, if empty then sanitized ini file name is used E.G.: "wincmd.ini" WILL BE this._wincmd_ini
+	 *
 	 */
-	_setIniFile( $ini_file )
+	_setIniFile( $ini_file, $key:="" )
 	{
 		$ini_file_path	= %Commander_Path%\%$ini_file%
 		
-		this["_" RegExReplace( $ini_file, "\.", "_" )] := $ini_file_path
+		if( ! $key )
+		{
+			SplitPath, $ini_file, $filename
+			$key := "_" RegExReplace( $filename, "\.", "_" )
+		}
+		
+		this[$key] := $ini_file_path
 	}
 	/*---------------------------------------
 		COMMANDS
