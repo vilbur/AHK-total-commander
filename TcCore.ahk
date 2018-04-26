@@ -55,7 +55,6 @@ Class TcCore
 	 */
 	_setIniFile( $ini_file, $key:="" )
 	{
-		$ini_file_path	= %Commander_Path%\%$ini_file%
 		
 		if( ! $key )
 		{
@@ -63,8 +62,16 @@ Class TcCore
 			$key := "_" RegExReplace( $filename, "\.", "_" )
 		}
 		
-		this[$key] := $ini_file_path
+		this[$key] := this.getIniFile( $ini_file )
 	}
+	/**
+	 */
+	getIniFile( $ini_file )
+	{
+		$ini_file_path	= %Commander_Path%\%$ini_file%
+
+		return $ini_file_path	
+	} 
 	/*---------------------------------------
 		COMMANDS
 	-----------------------------------------
