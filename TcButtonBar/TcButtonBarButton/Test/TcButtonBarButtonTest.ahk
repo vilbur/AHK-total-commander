@@ -1,7 +1,7 @@
 #SingleInstance force
 
 #Include %A_LineFile%\..\..\TcButtonBarButton.ahk
-#Include %A_LineFile%\..\UserCommandHelpers.ahk
+#Include %A_LineFile%\..\..\..\Test\Helpers\userCommandHelpers.ahk
 
 global $usercmd_ini
 $usercmd_ini	= %Commander_Path%\usercmd.ini
@@ -17,7 +17,7 @@ addCustomCommandTest()
 	
 	;deleteTestUserCommand()
 	
-	Dump($Button, "Button", 1)			
+	Dump($Button, "addCustomCommandTest", 1)			
 }
 
 /** CreateButtonTest
@@ -29,7 +29,7 @@ CreateButtonTest()
 				.icon("%systemroot%\system32\shell32.dll", 43)
 				.tooltip("Tooltip test")
 
-	Dump($Button, "Button", 1)			
+	Dump($Button, "CreateButtonTest", 1)			
 }
 
 

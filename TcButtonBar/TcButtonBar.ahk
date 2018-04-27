@@ -1,13 +1,13 @@
 #Include %A_LineFile%\..\includes.ahk
 
 #Include %A_LineFile%\..\TcButtonBarButton\TcButtonBarButton.ahk
-
+#Include %A_LineFile%\..\TcSubButtonBar\TcSubButtonBar.ahk
 /** TcButtonBar
  *
  */
 Class TcButtonBar extends TcCore
 {
-	_buttonbar_ini	:= $buttonbar_ini
+	_path	:= ""
 	_buttons 	:= {}
 	
 	/**
@@ -30,7 +30,7 @@ Class TcButtonBar extends TcCore
 		if( ! $buttonbar_path )
 			IniRead, $buttonbar_path, % this._wincmd_ini, buttonbar, buttonbar
 		
-		this._setButtonBar( $buttonbar_path )
+		this.path( $buttonbar_path )
 		
 		this._parseButtonBar()
 		
@@ -40,21 +40,20 @@ Class TcButtonBar extends TcCore
 	 */
 	save( $buttonbar_path:="" )
 	{
-		;MsgBox,262144,buttonbar_path, %$buttonbar_path%,3 
+		this.path( $buttonbar_path )
+
 		For $index, $Button in this._buttons
 			$all_buttons .= $Button.join($index) "`n"
 		
 		$buttonbar_content := "[Buttonbar]`nButtoncount=" this._buttons.length() "`n" $all_buttons
 		;Dump($buttonbar, "buttonbar", 1)
-		if( ! $buttonbar_path && ! this._buttonbar_ini )
+		if( ! this._path )
 			this.exit("TcButtonBar.save()`n`nPath is not defined")
 		
-		if( ! $buttonbar_path )
-			$buttonbar_path := this._buttonbar_ini
+		FileDelete, % this._path
+		FileAppend, %$buttonbar_content%, % this._path
 		
-		FileDelete, %$buttonbar_path% 
-		FileAppend, %$buttonbar_content%, %$buttonbar_path%
-		
+		return this 
 	}
 	/** Add command from usercmd.ini
 	  *
@@ -65,10 +64,11 @@ Class TcButtonBar extends TcCore
 	 */
 	command( $command, $position:="" )
 	{
+		;Dump($command, "command", 1)
 		if( InStr( $command, "em_" ) )
 			$Button 	:= new TcButtonBarButton( this.getIniFile( "Usercmd.ini" ) ) 
 							.loadCommand( $user_command )
-		
+		;Dump($Button, "Button", 1)
 		this._buttons.insertAt( this._getPostion($position), $button )
 
 		return this
@@ -104,11 +104,13 @@ Class TcButtonBar extends TcCore
 	} 
 	/**
 	 */
-	_setButtonBar( $buttonbar )
+	path( $buttonbar_path:="" )
 	{
-		this._setIniFile( RegExReplace( $buttonbar, "%Commander_Path%", "" ), "_buttonbar_ini"  )
+		if( $buttonbar_path )
+			this._path := $buttonbar_path
+		
+		return $buttonbar_path ? this : this._path
 	}
-	
 	
 	/*---------------------------------------
 		PARSE BUTTONBAR.BAR
@@ -118,7 +120,7 @@ Class TcButtonBar extends TcCore
 	 */
 	_parseButtonBar()
 	{
-		IniRead, $lines, % this._buttonbar_ini, buttonbar
+		IniRead, $lines, % this._path, buttonbar
 			Loop Parse, $lines, `n
 			;Dump(A_LoopField, "", 1)
 				this._setButton( this._parseLine(A_LoopField)* )

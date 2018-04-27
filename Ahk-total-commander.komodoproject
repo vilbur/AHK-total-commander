@@ -2,5 +2,6 @@
 <!-- Komodo Project File - DO NOT EDIT -->
 <project id="bd9e2af9-32eb-451b-beef-baf64c5d339a" kpf_version="5" name="Ahk-total-commander.komodoproject">
 <preference-set idref="bd9e2af9-32eb-451b-beef-baf64c5d339a" id="project" preftype="project">
+  <long id="prefs_version">1</long>
 </preference-set>
 </project>

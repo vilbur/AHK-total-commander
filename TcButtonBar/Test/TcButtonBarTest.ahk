@@ -1,8 +1,7 @@
 #SingleInstance force
 
 #Include %A_LineFile%\..\..\TcButtonBar.ahk
-#Include %A_LineFile%\..\..\TcButtonBarButton\Test\UserCommandHelpers.ahk
-
+#Include %A_LineFile%\..\Helpers\userCommandHelpers.ahk
 /** LoadCurrentButtonBarTest
 */
 LoadCurrentButtonBarTest()
@@ -14,59 +13,22 @@ LoadCurrentButtonBarTest()
 */
 createButtonBar()
 {
-	;createTestUserCommand()
-	$TcButtonBar 	:= new TcButtonBar()
-	$Button 	:= new TcButtonBarButton()
-				.cmd( "foo.bat" )
-				.icon("%systemroot%\system32\shell32.dll", 43)
+	$TcButtonBar 	:= getNewButtonBar()
+	;Dump($TcButtonBar._buttons, "TcButtonBar._buttons", 1)
 
-	/* ADD COMMAND
-	  */
-	$TcButtonBar.command( $user_command )
-	
 	/* ADD BUTTONS
 	  */
-	$TcButtonBar.button( $Button.clone().tooltip("Button To Delete") )	
-	$TcButtonBar.button( $Button.tooltip("Last Button") )
-	$TcButtonBar.button( $Button.clone().tooltip("First Button") ,1 )		
-	
-	
+	$TcButtonBar.button( new TcButtonBarButton().tooltip("Button To Delete"), 2 )	
+		
 	/* REMOVE BUTTONS
 	*/
-	$TcButtonBar.remove(3)
+	$TcButtonBar.remove(2)
 
-	/* SAEVE
+	/* SAVE
 	*/
 	$TcButtonBar.save(A_ScriptDir "\TestBar.bar")
-				
 	;Dump($TcButtonBar._buttons, "TcButtonBar._buttons", 1)
-	
 }
-/** addCustomCommandTest
-*/
-addCustomCommandTest()
-{
-	;createTestUserCommand()
-	
-	$TcButtonBar 	:= new TcButtonBar().load()
-
-	;$TcButtonBar.command( $user_command )
-	;Dump($TcButtonBar._buttons, "TcButtonBar._buttons", 0)
-	
-	$TcButtonBar.save()
-	
-	;Dump($TcButtonBar._buttons, "TcButtonBar._buttons", 0)		
-	;$TcButtonBar.command( $user_command )	
-					
-					
-	;Dump($TcButtonBar._buttons, "TcButtonBar._buttonbar", 0)
-
-	;deleteTestUserCommand()
-	
-	;Dump($Button, "Button", 1)			
-}
-
-
 
 /*---------------------------------------
 	 RUN TESTS
@@ -74,7 +36,3 @@ addCustomCommandTest()
 */
 ;LoadCurrentButtonBarTest()
 createButtonBar()
-;addCustomCommandTest()
-
-
-

@@ -2,10 +2,34 @@
 global $user_command	:= "em_TestTcButtonBar"
 
 
+
 /*---------------------------------------
 	HELPERS FOR TEST
 -----------------------------------------
 */
+
+/** getNewButtonBar
+*/
+getNewButtonBar()
+{
+	$TcButtonBar 	:= new TcButtonBar()
+	$Button 	:= new TcButtonBarButton()
+				.cmd( "foo.bat" )
+				.icon("%systemroot%\system32\shell32.dll", 43)
+
+	/* ADD COMMAND
+	  */
+	$TcButtonBar.command( $user_command )
+	
+	/* ADD BUTTONS
+	  */
+	$TcButtonBar.button( $Button.tooltip("Last Button") )
+	$TcButtonBar.button( $Button.clone().tooltip("First Button") ,1 )		
+	
+	return $TcButtonBar
+}
+
+
 /**
  */
 createTestUserCommand()
