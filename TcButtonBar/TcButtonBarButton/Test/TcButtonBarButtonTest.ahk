@@ -8,50 +8,16 @@
 global $usercmd_ini
 $usercmd_ini	= %Commander_Path%\usercmd.ini
 
-/** loadCustomCommand
-*/
-loadCustomCommand()
-{	
-	$Button 	:= new TcButtonBarButton($usercmd_ini)
-					.loadCommand( $user_command )
 
-	Dump($Button, "loadCustomCommand", 1)			
-}
+$CustomCommand 	:= new TcButtonBarButton($usercmd_ini).loadCommand( $user_command )
+$Separator 	:= new TcButtonBarButton().separator()
+$Button_empty 	:= new TcButtonBarButton().empty()
+$Button 	:= new TcButtonBarButton()
+			.cmd( "foo.bat" )
+			.icon("%systemroot%\system32\shell32.dll", 43)
+			.tooltip("Tooltip test")
 
-/** makeSeparator
-*/
-makeSeparator()
-{	
-	$separator 	:= new TcButtonBarButton().separator()
-
-	Dump($separator, "separator", 1)			
-}
-/** makeEmptyButton
-*/
-makeEmptyButton()
-{	
-	$Button_empty 	:= new TcButtonBarButton().empty()
-
-	Dump($Button_empty, "Button_empty", 1)			
-}
-/** CreateButtonTest
-*/
-CreateButtonTest()
-{	
-	$Button 	:= new TcButtonBarButton()
-				.cmd( "foo.bat" )
-				.icon("%systemroot%\system32\shell32.dll", 43)
-				.tooltip("Tooltip test")
-
-	Dump($Button, "CreateButtonTest", 1)			
-}
-
-
-/*---------------------------------------
-	RUN TESTS
------------------------------------------
-*/
-loadCustomCommand()
-makeSeparator()
-makeEmptyButton()
-CreateButtonTest()
+;Dump($CustomCommand, "loadCustomCommand", 1)			
+;Dump($Separator, "Separator", 1)
+;Dump($Button, "CreateButtonTest", 1)			
+;Dump($Button_empty, "Button_empty", 1)
