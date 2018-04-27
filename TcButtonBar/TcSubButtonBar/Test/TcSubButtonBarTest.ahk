@@ -11,13 +11,16 @@
 */
 TcSubButtonBarTest()
 {
+	$ButtonBar 	:= getNewButtonBar()
+	$SubButtonBar 	:= new TcSubButtonBar()
+	$newSubbar	:= getNewButtonBar().save(A_ScriptDir "\SubButtonBar.bar")
 	
-	$TcSubButtonBar 	:= new TcSubButtonBar()
-	$ButtonBar	:= getNewButtonBar().save(A_ScriptDir "\SubButtonBar.bar")
+	$SubButtonBar.bar($newSubbar)
+	$ButtonBar.button($SubButtonBar, 2)
 	
-	$TcSubButtonBar.subbar($ButtonBar)
 	
-	Dump($TcSubButtonBar, "TcSubButtonBar", 1)
+	;Dump($TcSubButtonBar, "TcSubButtonBar", 1)
+	Dump($ButtonBar, "ButtonBar", 0)	
 	
 }
 

@@ -29,7 +29,6 @@ Class TcButtonBar extends TcCore
 	{
 		if( ! $buttonbar_path )
 			IniRead, $buttonbar_path, % this._wincmd_ini, buttonbar, buttonbar
-		
 		this.path( $buttonbar_path )
 		
 		this._parseButtonBar()
@@ -107,7 +106,7 @@ Class TcButtonBar extends TcCore
 	path( $buttonbar_path:="" )
 	{
 		if( $buttonbar_path )
-			this._path := $buttonbar_path
+			this._path := this.pathFull($buttonbar_path)
 		
 		return $buttonbar_path ? this : this._path
 	}
@@ -122,14 +121,12 @@ Class TcButtonBar extends TcCore
 	{
 		IniRead, $lines, % this._path, buttonbar
 			Loop Parse, $lines, `n
-			;Dump(A_LoopField, "", 1)
 				this._setButton( this._parseLine(A_LoopField)* )
 	}
 	/**
 	 */
 	_setButton( $key, $position, $value )
 	{
-		;Dump($key, "key", 1)
 		if( ! $position )
 			return 
 		

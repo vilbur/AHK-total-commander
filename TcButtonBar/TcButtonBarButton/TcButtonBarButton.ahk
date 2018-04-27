@@ -2,7 +2,7 @@
  *
  *
  */
-Class TcButtonBarButton
+Class TcButtonBarButton extends TcCommanderPath
 {
 	static _cmd_ini := {path:""} ; path to *.ini with command, ussually Usercmd.ini
 	
@@ -16,12 +16,13 @@ Class TcButtonBarButton
 	 */
 	__New( $cmd_ini:="" )
 	{
+		this._setCommanderPath()
+		
 		if( $cmd_ini )
 			this._cmd_ini.path := $cmd_ini
 
 		return this
 	}
-
 
 	/** If button is subbar
 	 */
@@ -44,13 +45,13 @@ Class TcButtonBarButton
 	join($index)
 	{
 		For $key, $value in this
-			if( $value )
-				$cmd_string .= RegExReplace( $key, "^_", "" ) $index "=" $value "`n"
+			if( $value && !isObject($value) )
+				$cmd_string .= RegExReplace( $key, "^_", "" ) $index "=" this.pathEnv($value) "`n"
 		
 		;return $cmd_string
 		return % SubStr( $cmd_string, 1, StrLen($cmd_string)-1 ) 
 	}
-	
+
 	/*---------------------------------------
 		SET\GET BUTTNO PROPERTY
 	-----------------------------------------

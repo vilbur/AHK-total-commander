@@ -7,7 +7,7 @@
 LoadCurrentButtonBarTest()
 {
 	$TcButtonBar 	:= new TcButtonBar().load()
-	;Dump($TcButtonBar, "TcButtonBar", 0)
+	Dump($TcButtonBar, "TcButtonBar", 0)
 }
 /** createButtonBar
 */
@@ -34,5 +34,5 @@ createButtonBar()
 	 RUN TESTS
 -----------------------------------------
 */
-;LoadCurrentButtonBarTest()
+LoadCurrentButtonBarTest()
 createButtonBar()

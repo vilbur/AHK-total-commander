@@ -1,8 +1,10 @@
+#Include %A_LineFile%\..\TcCommanderPath.ahk
+
 /* Class TcCore
 */
-Class TcCore
+Class TcCore extends TcCommanderPath
 {
-	_wincmd_ini	:= ""
+	_wincmd_ini	:= ""	
 	_process_name	:= ""	
 	_hwnd	:= ""
 
@@ -12,7 +14,7 @@ Class TcCore
 	{
 		;$wincmd_ini	= %Commander_Path%\wincmd.ini		
 		;this._wincmd_ini	:= $wincmd_ini
-		
+		this._setCommanderPath()
 		this._setIniFile( "wincmd.ini" )
 		this._setProcessName()
 		this._setHwnd()
@@ -43,6 +45,7 @@ Class TcCore
 		WinGet, $hwnd , ID, ahk_class TTOTAL_CMD
 		this._hwnd := $hwnd
 	}
+
 	/*---------------------------------------
 		INI FILE
 	-----------------------------------------
@@ -90,5 +93,8 @@ Class TcCore
 		SendMessage  1075, 540, 0, , % this.ahkId()
 		return this
 	}
+	
+	
+	
 
 }

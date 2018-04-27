@@ -1,6 +1,8 @@
 #SingleInstance force
 
 #Include %A_LineFile%\..\..\TcButtonBarButton.ahk
+
+#Include %A_LineFile%\..\..\..\..\TcCommanderPath.ahk
 #Include %A_LineFile%\..\..\..\Test\Helpers\userCommandHelpers.ahk
 
 global $usercmd_ini

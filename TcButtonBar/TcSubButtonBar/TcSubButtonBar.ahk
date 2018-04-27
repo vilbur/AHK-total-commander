@@ -7,15 +7,14 @@
  */
 Class TcSubButtonBar extends TcButtonBarButton
 {
-	
 	_subbar := ""
 	_iconic	:= 0 ; show as: bar = 0 | menu = 1	
 
-	/**
+	/** Asssign TcButtonBar to button
 	 */
-	subbar( $subbar )
+	bar( $TcButtonBar )
 	{
-		this._subbar	:= $subbar
+		this._subbar	:= $TcButtonBar
 		
 		this.cmd( this._subbar.path() )
 		

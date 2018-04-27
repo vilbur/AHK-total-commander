@@ -12,9 +12,11 @@ global $user_command	:= "em_TestTcButtonBar"
 */
 getNewButtonBar()
 {
+	$commander_path	= %Commander_Path%
+
 	$TcButtonBar 	:= new TcButtonBar()
 	$Button 	:= new TcButtonBarButton()
-				.cmd( "foo.bat" )
+				.cmd( $commander_path "\commands\foo.bat" )
 				.icon("%systemroot%\system32\shell32.dll", 43)
 
 	/* ADD COMMAND
