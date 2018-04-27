@@ -2,7 +2,7 @@
 Buttoncount=7
 button1=C:\GoogleDrive\Programs\Core\AutoHotkey\Lib\_vendor\_vilbur\total-commander\TcButtonBar\TcSubButtonBar\Test\SubButtonBarTest.ico
 cmd1=C:\GoogleDrive\Programs\Core\AutoHotkey\Lib\_vendor\_vilbur\total-commander\TcButtonBar\TcSubButtonBar\Test\SubButtonBarTest.bar
-iconic1=0
+iconic1=1
 menu1=SubButtonBarTest
 button2=%systemroot%\system32\shell32.dll,43
 cmd2=%COMMANDER_PATH%\commands\foo.bat

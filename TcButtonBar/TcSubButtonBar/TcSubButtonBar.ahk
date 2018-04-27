@@ -12,7 +12,7 @@ Class TcSubButtonBar extends TcButtonBarButton
 	  *
 	  * @param	buttonbar|string	$buttonbar	TcButtonBar object OR path to *.bar file
 	  *
-	  *	  	  
+	  * @return	self
 	 */
 	bar( $buttonbar )
 	{
@@ -21,6 +21,8 @@ Class TcSubButtonBar extends TcButtonBarButton
 		return this
 	}
 	/** Save buttonbar
+	  *
+	  * @return	self
 	 */
 	save( $buttonbar_path:="" )
 	{

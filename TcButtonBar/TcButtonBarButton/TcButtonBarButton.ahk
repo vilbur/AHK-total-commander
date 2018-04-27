@@ -1,10 +1,32 @@
-/** Representation of Button in button bar
+/** TcButtonBarButton - Button in button bar
+ * 
+ *  CREATE BUTTON OF TYPES:
+ *		1) Custom button
+ *		2) From command
+ *		3) Separator
+ *		4) Empty button
  *
+ * @class TcButtonBarButton( [string $file] )
+ *		     
+ * @method	self	loadCommand( string $command_name )	Load command as button from cmd.ini E.G.: Usercmd.ini
+ * @method	self	loadButton( int $position )	Load button from *.bar file
+ * @method	self	empty()	Create empty button
  *
+ * @method	self	cmd( string $cmd )	Get\Set cmd key
+ * @method	self	menu( string $menu )	Get\Set menu key
+ * @method	self	param( string $param )	Get\Set param key
+ * @method	self	iconic( string $iconic )	Get\Set iconic key
+ * @method	self	button( string $button[, int $index] )	Get\Set button key    
+ *
+ * @method	self	icon( string $icon[, int $index] )	Get\Set icon, alias for button()
+ * @method	self	tooltip( string $tooltip )	Get\Set tooltip, alias for menu()
+ *     
+ * @method	string	join( int $position )	Join object data to string ready for write to *.bar file
+ * 
  */
 Class TcButtonBarButton extends TcCommanderPath
 {
-	static _cmd_ini := {path:""} ; path to *.ini with command, ussually Usercmd.ini
+	static _file := {path:""} ; path to *.ini with command, ussually Usercmd.ini
 	
 	_cmd	:= ""
 	_param	:= ""	
@@ -13,34 +35,33 @@ Class TcButtonBarButton extends TcCommanderPath
 	_menu	:= "" ; tooltip
 
 	/**
+	  * @param	string	$file	path to cmd.ini file or *.bar file
 	 */
-	__New( $cmd_ini:="" )
+	__New( $file:="" )
 	{
 		this._setCommanderPath()
 		
-		if( $cmd_ini )
-			this._cmd_ini.path := $cmd_ini
-
-		return this
+		if( $file )
+			this._file.path := $file
 	}
-	/** Load Command as button from Usercmd.ini
+	/** Load command as button from cmd.ini E.G.: Usercmd.ini
 	 *  
-	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
+	 *  @param	string	$command_name	Command name from "Usercmd.ini" E.G.: "em_custom-command"
 	 *
 	 * @return	self	
 	 */
-	loadCommand( $command )
+	loadCommand( $command_name )
 	{
-		this.cmd( $command)
+		this.cmd( $command_name)
 		
 		For $key, $value in this
 			this._loadCommandProperty($key)
 				
 		return this
 	}
-	/** Load Command as button from Usercmd.ini
+	/** Load button from *.bar file
 	 *  
-	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
+	 *  @param	int	$position	Position number in *.bar file
 	 *
 	 * @return	self	
 	 */
@@ -51,15 +72,9 @@ Class TcButtonBarButton extends TcCommanderPath
 				
 		return this
 	}
-	/** Make button separator
-	 */
-	separator()
-	{
-		;this.button("separator")
-		this.iconic(0)
-		return this 
-	}
-	/** Make empty button
+	/** Create empty button
+	 *
+	 * @return	self	
 	 */
 	empty()
 	{
@@ -87,41 +102,18 @@ Class TcButtonBarButton extends TcCommanderPath
 		
 		return % SubStr( $cmd_string, 1, StrLen($cmd_string)-1 ) 
 	}
-	/**
-	 */
-	_isSeparator()
-	{
-		For $key, $value in this
-			if( $value )
-				return
-				
-		return true
-	} 
-	/**
-	 */
-	_isIconicNumber($key)
-	{
-		
-		$iconnic := this._iconic
-		
-		if( $key=="_iconic" )
-			if $iconnic is number
-				return true
-		
-		;return % $key == "iconic" && this._iconic==0
-	} 
+
 	/*---------------------------------------
 		SET\GET BUTTNO PROPERTY
 	-----------------------------------------
 	*/
-
-	/**
+	/** Set\Get cmd property 
 	 */
 	cmd( $cmd:="" )
 	{
 		return % this._setOrGet( "_cmd", $cmd )
 	}
-	/**
+	/** Set\Get param property 
 	 */
 	param( $param:="" )
 	{
@@ -178,7 +170,30 @@ Class TcButtonBarButton extends TcCommanderPath
 		
 		return this
 	}
-	
+	/*---------------------------------------
+		PRIVATE
+	-----------------------------------------
+	*/
+	/**
+	 */
+	_isSeparator()
+	{
+		For $key, $value in this
+			if( $value )
+				return
+				
+		return true
+	} 
+	/**
+	 */
+	_isIconicNumber($key)
+	{
+		$iconnic := this._iconic
+		
+		if( $key=="_iconic" )
+			if $iconnic is number
+				return true
+	} 
 	/*---------------------------------------
 		SET PROPERTIES
 	-----------------------------------------
@@ -247,7 +262,7 @@ Class TcButtonBarButton extends TcCommanderPath
 	{
 		$key := RegExReplace( $key, "^_", "" ) 
 
-		IniRead, $value, % this._cmd_ini.path, %$section%, %$key%
+		IniRead, $value, % this._file.path, %$section%, %$key%
 		
 		return $value!="ERROR" ? $value : "" 
 	} 
