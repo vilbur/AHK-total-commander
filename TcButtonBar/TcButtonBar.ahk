@@ -2,7 +2,16 @@
 
 #Include %A_LineFile%\..\TcButtonBarButton\TcButtonBarButton.ahk
 #Include %A_LineFile%\..\TcSubButtonBar\TcSubButtonBar.ahk
-/** TcButtonBar
+
+/** TcButtonBar - Works with *.bar file
+ *
+ * @method	self	load( string $buttonbar_path )	Load button bar file
+ * @method	self	save( string $buttonbar_path )	Save buttonbar
+ * @method	self	path( string $buttonbar_path )	Get\Set path
+ *
+ * @method	self	command( string $command[, int $position] )	Add command from usercmd.ini
+ * @method	self	button( object|string $Button[, int $position] )	Add Button to button bar
+ * @method	self	remove( int $position )	Remove button at position
  *
  */
 Class TcButtonBar extends TcCore
@@ -34,6 +43,8 @@ Class TcButtonBar extends TcCore
 		return this  
 	}
 	/** Save buttonbar
+	  *
+	  * @param	string	$buttonbar_path	Path to button bar
 	 */
 	save( $buttonbar_path:="" )
 	{
@@ -52,13 +63,16 @@ Class TcButtonBar extends TcCore
 		
 		return this 
 	}
-	/**
+	/** Get\Set path
+	  * @param	string	$buttonbar_path	Path to button bar
+	  *
+	  * @return	self|string
 	 */
 	path( $buttonbar_path:="" )
 	{
 		if( $buttonbar_path )
 			this._path := this.pathFull($buttonbar_path)
-		;Dump(this._path, "this._path", 1)
+
 		return $buttonbar_path ? this : this._path
 	}
 	/*---------------------------------------
@@ -109,7 +123,6 @@ Class TcButtonBar extends TcCore
 	{
 		this._buttons.removeAt($position)
 	}
-	
 	/** Get index of button
 	  *
 	  * @param	int	$position	Index of button

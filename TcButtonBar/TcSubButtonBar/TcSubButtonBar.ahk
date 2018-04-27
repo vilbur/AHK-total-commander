@@ -1,24 +1,32 @@
-/** Create Sub button bar
+/** TcSubButtonBar - Button with nested button bar
+ *	Set button bar as button
  *
- * Set buttonbar as button
+ * @method	self|TcButtonBar	bar( [string|object $buttonbar] )	Set\Get button bar
+ * @method	self	save( [string $buttonbar_path] )	Save button bar to file
  *
+ * @method	self	asBar()	Show sub bar as flatterned menu
+ * @method	self	asMenu()	Show sub bar as dropdown menu
+ * 
+ * @method	self	backButton( string $main_buttonbar_path ) Set first button as back button to main button bar	
+ *    
  */
 Class TcSubButtonBar extends TcButtonBarButton
 {
 	_bar 	:= "" ; subbar
 	_iconic	:= 0 ; show as: bar = 0 | menu = 1
 
-	/** Asssign TcButtonBar to button
+	/** Get\Set TcButtonBar to button
 	  *
-	  * @param	buttonbar|string	$buttonbar	TcButtonBar object OR path to *.bar file
+	  * @param	TcButtonBar|string	$buttonbar	TcButtonBar object OR path to *.bar file
 	  *
-	  * @return	self
+	  * @return	self|TcButtonBar 
 	 */
-	bar( $buttonbar )
+	bar( $buttonbar:="" )
 	{
-		this._bar	:= isObject($buttonbar) ? $buttonbar : new TcButtonBar().load($buttonbar)
+		if( $buttonbar )
+			this._bar	:= isObject($buttonbar) ? $buttonbar : new TcButtonBar().load($buttonbar)
 		
-		return this
+		return $buttonbar ? this : this._bar
 	}
 	/** Save buttonbar
 	  *
