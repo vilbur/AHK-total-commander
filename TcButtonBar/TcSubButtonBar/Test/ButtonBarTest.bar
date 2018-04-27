@@ -1,0 +1,16 @@
+[Buttonbar]
+Buttoncount=4
+button1=C:\GoogleDrive\Programs\Core\AutoHotkey\Lib\_vendor\_vilbur\total-commander\TcButtonBar\TcSubButtonBar\Test\SubButtonBarTest.ico
+cmd1=C:\GoogleDrive\Programs\Core\AutoHotkey\Lib\_vendor\_vilbur\total-commander\TcButtonBar\TcSubButtonBar\Test\SubButtonBarTest.bar
+iconic1=1
+menu1=SubButtonBarTest
+button2=%systemroot%\system32\shell32.dll,43
+cmd2=%COMMANDER_PATH%\commands\foo.bat
+menu2=First Button
+button3=C:\Windows\system32\shell32.dll,43
+cmd3=em_TestTcButtonBar
+menu3=Tooltip test
+param3=foo param
+button4=%systemroot%\system32\shell32.dll,43
+cmd4=%COMMANDER_PATH%\commands\foo.bat
+menu4=Last Button

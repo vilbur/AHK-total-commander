@@ -3,7 +3,7 @@
 */
 Class TcCommanderPath
 {
-	_commander_path	:= ""
+	static _paths	:= {}
 
 	/** SEARCH:
 	 *		"%COMMANDER_PATH%"
@@ -12,7 +12,7 @@ Class TcCommanderPath
 	 */
 	pathFull( $path )
 	{
-		return % RegExReplace( $path, "i)%COMMANDER_PATH%", this._commander_path  ) 
+		return % RegExReplace( $path, "i)%COMMANDER_PATH%", this._paths.commander  ) 
 	}
 	/** SEARCH:
 	 *		"C:\TotalCommander"
@@ -21,7 +21,7 @@ Class TcCommanderPath
 	 */
 	pathEnv( $path )
 	{
-		$commander_path_rx := RegExReplace( this._commander_path, "i)[\\\/]+", "\\" )
+		$commander_path_rx := RegExReplace( this._paths.commander, "i)[\\\/]+", "\\" )
 		return % RegExReplace( $path, "i)" $commander_path_rx, "%COMMANDER_PATH%" ) 
 	}
 
@@ -30,7 +30,7 @@ Class TcCommanderPath
 	_setCommanderPath()
 	{
 		$commander_path	= %Commander_Path%
-		this._commander_path	:= $commander_path
+		this._paths.commander	:= $commander_path
 	}
 	
 	

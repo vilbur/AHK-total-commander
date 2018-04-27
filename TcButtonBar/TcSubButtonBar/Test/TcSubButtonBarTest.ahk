@@ -5,27 +5,43 @@
 #Include %A_LineFile%\..\..\..\Test\Helpers\userCommandHelpers.ahk 
 
 
-;Dump($TcSubButtonBar, "TcSubButtonBar", 1)
+global  $buttonbar_path	:=  A_ScriptDir "\ButtonBarTest.bar"
+global  $sub_buttonbar_path	:=  A_ScriptDir "\SubButtonBarTest.bar"
 
-/** TcSubButtonBarTest
+/** createButtonBarWithSubBar
 */
-TcSubButtonBarTest()
+createButtonBarWithSubBar()
 {
 	$ButtonBar 	:= getNewButtonBar()
 	$SubButtonBar 	:= new TcSubButtonBar()
-	$newSubbar	:= getNewButtonBar().save(A_ScriptDir "\SubButtonBar.bar")
+				.bar(getNewButtonBar())
+				.asMenu()
+				.backButton($buttonbar_path)
+				.save($sub_buttonbar_path)
 	
-	$SubButtonBar.bar($newSubbar)
-	$ButtonBar.button($SubButtonBar, 2)
-	
-	
-	;Dump($TcSubButtonBar, "TcSubButtonBar", 1)
-	Dump($ButtonBar, "ButtonBar", 0)	
-	
+	$ButtonBar.button($SubButtonBar, 1)
+		
+	$ButtonBar.save($buttonbar_path)
+}
+/**
+ */
+loadSubbarFromString()
+{
+	$TcSubButtonBar 	:= new TcSubButtonBar().bar($sub_buttonbar_path)
+	Dump($TcSubButtonBar, "TcSubButtonBar", 0)
 }
 
+/**
+ */
+loadSubbars()
+{
+	$TcButtonBar 	:= new TcButtonBar().load($buttonbar_path)
+	Dump($TcButtonBar, "TcButtonBar", 0)
+}
 /*---------------------------------------
 	RUN TESTS
 -----------------------------------------
 */
-TcSubButtonBarTest()
+createButtonBarWithSubBar()
+loadSubbarFromString()
+loadSubbars()

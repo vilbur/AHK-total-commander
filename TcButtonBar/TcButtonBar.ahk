@@ -15,20 +15,18 @@ Class TcButtonBar extends TcCore
 	__New()
 	{
 		this._init()
-		;Dump(this, "this.", 1)
-		;Dump(this._buttons, "this._buttons", 0)
 	}
-	
 	/** Load button bar file
 	  *
 	  * @param	string	$buttonbar_path	If empty, current *.bar is used
 	  *
 	  * @return	self
 	 */
-	load( $buttonbar_path:="" )
-	{
+	load( $buttonbar_path:="")
+	{		
 		if( ! $buttonbar_path )
 			IniRead, $buttonbar_path, % this._wincmd_ini, buttonbar, buttonbar
+			
 		this.path( $buttonbar_path )
 		
 		this._parseButtonBar()
@@ -54,6 +52,19 @@ Class TcButtonBar extends TcCore
 		
 		return this 
 	}
+	/**
+	 */
+	path( $buttonbar_path:="" )
+	{
+		if( $buttonbar_path )
+			this._path := this.pathFull($buttonbar_path)
+		;Dump(this._path, "this._path", 1)
+		return $buttonbar_path ? this : this._path
+	}
+	/*---------------------------------------
+		BUTTON METHODS
+	-----------------------------------------
+	*/
 	/** Add command from usercmd.ini
 	  *
 	  * @param	string	$command	Command name E.g.:  "em_custom-command"
@@ -72,16 +83,24 @@ Class TcButtonBar extends TcCore
 
 		return this
 	}
-	/** Add button object to _buttons
+	/** Get\Set button object to _buttons
 	  *
-	  * @param	TcButtonBarButton	$Button	Button to be added
+	  * @param	TcButtonBarButton|int	$Button	Button to be added, or button position to get
 	  * @param	int	$position	Position of button, add as last if not defined
-	  *	  
+	  *
+	  * @example button( $Button, 5 ) 	Add button at 5th position 
+	  * @example button( 5 )	Get button at 5th position 
+	  *
 	  * @return	self
 	 */
 	button( $Button, $position:="" )
 	{
+		if $Button is number 
+			return this._buttons[$Button]
+		
 		this._buttons.insertAt( this._getPostion($position), $Button )
+		
+		return this
 	}
 	/** Remove button at position
 	  * @param	int	$position	Position of button
@@ -100,17 +119,7 @@ Class TcButtonBar extends TcCore
 	_getPostion( $position )
 	{
 		return % $position ? $position : this._buttons.length() +1
-	} 
-	/**
-	 */
-	path( $buttonbar_path:="" )
-	{
-		if( $buttonbar_path )
-			this._path := this.pathFull($buttonbar_path)
-		
-		return $buttonbar_path ? this : this._path
 	}
-	
 	/*---------------------------------------
 		PARSE BUTTONBAR.BAR
 	-----------------------------------------
@@ -121,29 +130,34 @@ Class TcButtonBar extends TcCore
 	{
 		IniRead, $lines, % this._path, buttonbar
 			Loop Parse, $lines, `n
-				this._setButton( this._parseLine(A_LoopField)* )
+				if( RegExMatch( A_LoopField, "i)cmd\d+" )  )
+					this._addItem( A_LoopField )
 	}
 	/**
 	 */
-	_setButton( $key, $position, $value )
+	_addItem( $line )
 	{
-		if( ! $position )
-			return 
+		RegExMatch( $line, "^[^\d]+(\d+)=(.*)", $line_match )
 		
-		if( ! this._buttons[$position] )
-			this._buttons[$position] := new TcButtonBarButton()
-			
-		this._buttons[$position].set( $key, $value )
-	} 
-	/**
-	 */
-	_parseLine( $line )
-	{
-		RegExMatch( $line, "^([^\d]+)(\d+)=(.*)", $line_match )
-
-		return [ $line_match1, $line_match2, $line_match3]
-	} 
+		$type	:= RegExMatch( $line, "i)\.bar$" ) ? "SubBar" : "Button"
+		$position	:= $line_match1
+		$value	:= $line_match2
+		$Item	:= $type=="Button" ? new TcButtonBarButton(this._path) : new TcSubButtonBar(this._path)
+		$Item	:= $Item.loadButton($position)
+		
+		
+		if( $type=="SubBar" && this._notReferenceToMainBar( $path ) )
+			$Item.bar($position)
+		
+		this._buttons[$position] := $Item
+	}
 	
+	/** Avoids endless loop on button pointing back to main bar
+	 */
+	_notReferenceToMainBar( $path )
+	{
+		return % $path!=this._path
+	} 
 
 	/*---------------------------------------
 		HELPERS

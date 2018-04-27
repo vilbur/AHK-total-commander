@@ -12,8 +12,6 @@ Class TcCore extends TcCommanderPath
 	 */
 	_init()
 	{
-		;$wincmd_ini	= %Commander_Path%\wincmd.ini		
-		;this._wincmd_ini	:= $wincmd_ini
 		this._setCommanderPath()
 		this._setIniFile( "wincmd.ini" )
 		this._setProcessName()

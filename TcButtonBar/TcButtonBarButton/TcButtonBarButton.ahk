@@ -11,7 +11,7 @@ Class TcButtonBarButton extends TcCommanderPath
 	_button	:= "" ; icon
 	_iconic	:= "" ; icon number
 	_menu	:= "" ; tooltip
-	
+
 	/**
 	 */
 	__New( $cmd_ini:="" )
@@ -23,7 +23,6 @@ Class TcButtonBarButton extends TcCommanderPath
 
 		return this
 	}
-
 	/** If button is subbar
 	 */
 	isSubbar()
@@ -121,7 +120,11 @@ Class TcButtonBarButton extends TcCommanderPath
 	-----------------------------------------
 	*/
 	
-	/** Set\Get property 
+	/** Set\Get property
+	  *
+	  * @param	string	$key	Key of property
+	  * @param	string	$value	Value of property 
+	  *
 	 */
 	set( $key, $value:="" )
 	{
@@ -142,10 +145,10 @@ Class TcButtonBarButton extends TcCommanderPath
 	} 	
 
 	/*---------------------------------------
-		LOAD COMMAND FORM usercmd.ini
+		LOAD COMMAND FROM usercmd.ini
 	-----------------------------------------
 	*/
-	/** Load Command as button
+	/** Load Command as button from Usercmd.ini
 	 *  
 	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
 	 *
@@ -157,32 +160,56 @@ Class TcButtonBarButton extends TcCommanderPath
 		
 		For $key, $value in this
 			this._loadProperty($key)
-		
-		;this._setIconFromButton()
-		
+				
 		return this
 	}
 	/** Load value from ini
 	 */
-	_loadProperty($key)
+	_loadCommandProperty($key)
 	{
-		$ini_value := this._getIniValue( $key )
+		$ini_value := this._getIniValue( this.cmd(), $key )
 		
 		if( $ini_value && ! this[$key] )
 			this[$key] := $ini_value
 	}
-
+	/*---------------------------------------
+		LOAD COMMAND FROM *.bar FILE
+	-----------------------------------------
+	*/
+	/** Load Command as button from Usercmd.ini
+	 *  
+	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
+	 *
+	 * @return	self	
+	 */
+	loadButton( $position )
+	{		
+		For $key, $value in this
+			this._loadButtonProperty($key, $position)
+				
+		return this
+	}
+	/** Load value from ini
+	 */
+	_loadButtonProperty($key, $position)
+	{
+		$ini_value := this._getIniValue( "Buttonbar", $key $position )
+		
+		if( $ini_value && ! this[$key] )
+			this[$key] := $ini_value
+	}
+	
 	/*---------------------------------------
 		INI METHODS
 	-----------------------------------------
 	*/
 	/**
 	 */
-	_getIniValue( $key )
+	_getIniValue( $section, $key )
 	{
 		$key := RegExReplace( $key, "^_", "" ) 
-		
-		IniRead, $value, % this._cmd_ini.path, % this.cmd(), %$key%
+
+		IniRead, $value, % this._cmd_ini.path, %$section%, %$key%
 		
 		return $value!="ERROR" ? $value : "" 
 	} 
