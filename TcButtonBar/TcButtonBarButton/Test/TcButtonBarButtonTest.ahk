@@ -10,7 +10,7 @@ $usercmd_ini	= %Commander_Path%\usercmd.ini
 */
 addCustomCommandTest()
 {
-	createTestUserCommand()
+	;createTestUserCommand()
 	
 	$Button 	:= new TcButtonBarButton($usercmd_ini)
 					.loadCommand( $user_command )
