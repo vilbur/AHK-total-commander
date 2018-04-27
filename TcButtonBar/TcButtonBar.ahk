@@ -14,7 +14,7 @@ Class TcButtonBar extends TcCore
 	 */
 	__New()
 	{
-		this._init()
+		this.initCore()
 	}
 	/** Load button bar file
 	  *

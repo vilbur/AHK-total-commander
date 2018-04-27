@@ -8,20 +8,32 @@
 global $usercmd_ini
 $usercmd_ini	= %Commander_Path%\usercmd.ini
 
-/** addCustomCommandTest
+/** loadCustomCommand
 */
-addCustomCommandTest()
-{
-	;createTestUserCommand()
-	
+loadCustomCommand()
+{	
 	$Button 	:= new TcButtonBarButton($usercmd_ini)
 					.loadCommand( $user_command )
-	
-	;deleteTestUserCommand()
-	
-	Dump($Button, "addCustomCommandTest", 1)			
+
+	Dump($Button, "loadCustomCommand", 1)			
 }
 
+/** makeSeparator
+*/
+makeSeparator()
+{	
+	$separator 	:= new TcButtonBarButton().separator()
+
+	Dump($separator, "separator", 1)			
+}
+/** makeEmptyButton
+*/
+makeEmptyButton()
+{	
+	$Button_empty 	:= new TcButtonBarButton().empty()
+
+	Dump($Button_empty, "Button_empty", 1)			
+}
 /** CreateButtonTest
 */
 CreateButtonTest()
@@ -39,5 +51,7 @@ CreateButtonTest()
 	RUN TESTS
 -----------------------------------------
 */
-addCustomCommandTest()
+loadCustomCommand()
+makeSeparator()
+makeEmptyButton()
 CreateButtonTest()

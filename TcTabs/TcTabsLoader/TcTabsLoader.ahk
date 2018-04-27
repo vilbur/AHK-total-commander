@@ -12,7 +12,7 @@ Class TcTabsLoader extends TcCore
 	 */
 	__New()
 	{
-		this._init()
+		this.initCore()
 		this._setIniFile( "usercmd.ini" )		
 	}
 	/** load tabs file
@@ -178,7 +178,7 @@ Class TcTabsLoader extends TcCore
 		
 		WinWait, ahk_class TTOTAL_CMD,,2
 		
-		this._init()
+		this.initCore()
 	}  
 	
 

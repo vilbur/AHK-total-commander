@@ -38,7 +38,7 @@ Class TcPaneWatcher
 		
 		;this._TcActivate.hwnd(this._hwnd)
 
-		this._initActivePane( $hwnd_tc )
+		this.initCoreActivePane( $hwnd_tc )
 		
 		return this
 	}
@@ -71,7 +71,7 @@ Class TcPaneWatcher
 	}
 	/**
 	 */
-	_initActivePane( $hwnd_tc )
+	initCoreActivePane( $hwnd_tc )
 	{
 		$last_win := $hwnd_tc
 		

@@ -18,9 +18,9 @@ createButtonBarWithSubBar()
 				.asMenu()
 				.backButton($buttonbar_path)
 				.save($sub_buttonbar_path)
-	
+				
 	$ButtonBar.button($SubButtonBar, 1)
-		
+
 	$ButtonBar.save($buttonbar_path)
 }
 /**
@@ -28,7 +28,7 @@ createButtonBarWithSubBar()
 loadSubbarFromString()
 {
 	$TcSubButtonBar 	:= new TcSubButtonBar().bar($sub_buttonbar_path)
-	Dump($TcSubButtonBar, "TcSubButtonBar", 0)
+	;Dump($TcSubButtonBar, "TcSubButtonBar", 0)
 }
 
 /**
@@ -36,7 +36,7 @@ loadSubbarFromString()
 loadSubbars()
 {
 	$TcButtonBar 	:= new TcButtonBar().load($buttonbar_path)
-	Dump($TcButtonBar, "TcButtonBar", 0)
+	;Dump($TcButtonBar, "TcButtonBar", 0)
 }
 /*---------------------------------------
 	RUN TESTS

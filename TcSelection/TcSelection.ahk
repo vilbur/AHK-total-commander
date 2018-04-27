@@ -9,7 +9,7 @@ Class TcSelection extends TcCore
 
 	__New()
 	{
-		this._init()
+		this.initCore()
 	}
 	/** Get selection
 	*/

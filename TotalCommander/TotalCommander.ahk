@@ -9,7 +9,7 @@ Class TotalCommander extends TcCore
 	 */
 	__New()
 	{
-		this._init()
+		this.initCore()
 	}
 	/** activate
 	*/

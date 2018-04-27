@@ -23,18 +23,66 @@ Class TcButtonBarButton extends TcCommanderPath
 
 		return this
 	}
-	/** If button is subbar
+	/** Load Command as button from Usercmd.ini
+	 *  
+	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
+	 *
+	 * @return	self	
 	 */
-	isSubbar()
+	loadCommand( $command )
 	{
-		return RegExMatch( this._cmd, "i).bar$") 
+		this.cmd( $command)
+		
+		For $key, $value in this
+			this._loadCommandProperty($key)
+				
+		return this
 	}
-	/** If button is separator
+	/** Load Command as button from Usercmd.ini
+	 *  
+	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
+	 *
+	 * @return	self	
 	 */
-	isSeparator()
-	{
-		return ! this._cmd && ! this._button &&  ! this._iconic &&  ! this._param
+	loadButton( $position )
+	{		
+		For $key, $value in this
+			this._loadButtonProperty($key, $position)
+				
+		return this
 	}
+	/** Make button separator
+	 */
+	separator()
+	{
+		;this.button("separator")
+		this.iconic(0)
+		return this 
+	}
+	/** Make empty button
+	 */
+	empty()
+	{
+		this.cmd( "cmd.exe /c exit" )	; do nothing command
+		this.icon("%systemroot%\system32\shell32.dll,49") 	; empty icon
+		this.iconic(0)	; run minimized
+		this.tooltip("-")
+		
+		return this 
+	}
+	
+	;/** If button is subbar
+	; */
+	;isSubbar()
+	;{
+	;	return RegExMatch( this._cmd, "i).bar$") 
+	;}
+	;/** If button is separator
+	; */
+	;isSeparator()
+	;{
+	;	return ! this._cmd && ! this._button &&  ! this._iconic &&  ! this._param
+	;}
 	
 	/** Join object to string
 	  *
@@ -43,14 +91,33 @@ Class TcButtonBarButton extends TcCommanderPath
 	 */
 	join($index)
 	{
+		;Dump(this, "this.", 1)
 		For $key, $value in this
-			if( $value && !isObject($value) )
+			if( (!isObject($value) && $value ) || this._isSeparator($key) || this._isIconicNumber($key)  )
 				$cmd_string .= RegExReplace( $key, "^_", "" ) $index "=" this.pathEnv($value) "`n"
 		
 		;return $cmd_string
 		return % SubStr( $cmd_string, 1, StrLen($cmd_string)-1 ) 
 	}
-
+	/**
+	 */
+	_isSeparator($key)
+	{
+		return % $key == "_button"
+	} 
+	/**
+	 */
+	_isIconicNumber($key)
+	{
+		
+		$iconnic := this._iconic
+		
+		if( $key=="_iconic" )
+			if $iconnic is number
+				return true
+		
+		;return % $key == "iconic" && this._iconic==0
+	} 
 	/*---------------------------------------
 		SET\GET BUTTNO PROPERTY
 	-----------------------------------------
@@ -81,7 +148,12 @@ Class TcButtonBarButton extends TcCommanderPath
 	 */
 	iconic( $iconic:="" )
 	{
-		return % this._setOrGet( "_iconic", $iconic )
+		if $iconic is number
+			this._iconic := $iconic
+		else
+			return this._iconic
+
+		return this
 	}
 	/** Set\Get tooltip
 	 */
@@ -148,21 +220,7 @@ Class TcButtonBarButton extends TcCommanderPath
 		LOAD COMMAND FROM usercmd.ini
 	-----------------------------------------
 	*/
-	/** Load Command as button from Usercmd.ini
-	 *  
-	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
-	 *
-	 * @return	self	
-	 */
-	loadCommand( $command )
-	{
-		this.cmd( $command)
-		
-		For $key, $value in this
-			this._loadProperty($key)
-				
-		return this
-	}
+
 	/** Load value from ini
 	 */
 	_loadCommandProperty($key)
@@ -176,19 +234,7 @@ Class TcButtonBarButton extends TcCommanderPath
 		LOAD COMMAND FROM *.bar FILE
 	-----------------------------------------
 	*/
-	/** Load Command as button from Usercmd.ini
-	 *  
-	 *  @param	string	$command	Command name from "Usercmd.ini" E.G.: "em_custom-command"
-	 *
-	 * @return	self	
-	 */
-	loadButton( $position )
-	{		
-		For $key, $value in this
-			this._loadButtonProperty($key, $position)
-				
-		return this
-	}
+
 	/** Load value from ini
 	 */
 	_loadButtonProperty($key, $position)

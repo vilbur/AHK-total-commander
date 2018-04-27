@@ -21,7 +21,7 @@ Class TcPane extends TcControlClasses
 	 */
 	__New()
 	{
-		this._init()
+		this.initCore()
 		
 		this._setPaneClasses()
 		this._setPathClasses()
