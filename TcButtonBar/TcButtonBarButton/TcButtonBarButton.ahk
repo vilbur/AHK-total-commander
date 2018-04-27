@@ -71,39 +71,31 @@ Class TcButtonBarButton extends TcCommanderPath
 		return this 
 	}
 	
-	;/** If button is subbar
-	; */
-	;isSubbar()
-	;{
-	;	return RegExMatch( this._cmd, "i).bar$") 
-	;}
-	;/** If button is separator
-	; */
-	;isSeparator()
-	;{
-	;	return ! this._cmd && ! this._button &&  ! this._iconic &&  ! this._param
-	;}
-	
 	/** Join object to string
 	  *
-	  * @param	int	$index	index of button
+	  * @param	int	$position	position of button
 	  * @return	string	Lines ready to be written to *.bar file
 	 */
-	join($index)
+	join($position)
 	{
-		;Dump(this, "this.", 1)
+		if( this._isSeparator() )
+			return "iconic" $position "=0"
+	
 		For $key, $value in this
-			if( (!isObject($value) && $value ) || this._isSeparator($key) || this._isIconicNumber($key)  )
-				$cmd_string .= RegExReplace( $key, "^_", "" ) $index "=" this.pathEnv($value) "`n"
+			if( (!isObject($value) && $value ) || this._isIconicNumber($key)  )
+				$cmd_string .= RegExReplace( $key, "^_", "" ) $position "=" this.pathEnv($value) "`n"
 		
-		;return $cmd_string
 		return % SubStr( $cmd_string, 1, StrLen($cmd_string)-1 ) 
 	}
 	/**
 	 */
-	_isSeparator($key)
+	_isSeparator()
 	{
-		return % $key == "_button"
+		For $key, $value in this
+			if( $value )
+				return
+				
+		return true
 	} 
 	/**
 	 */
@@ -259,8 +251,5 @@ Class TcButtonBarButton extends TcCommanderPath
 		
 		return $value!="ERROR" ? $value : "" 
 	} 
-	
-	
-	
 	
 }

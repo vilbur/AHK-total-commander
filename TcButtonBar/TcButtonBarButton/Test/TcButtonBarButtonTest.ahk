@@ -10,7 +10,7 @@ $usercmd_ini	= %Commander_Path%\usercmd.ini
 
 
 $CustomCommand 	:= new TcButtonBarButton($usercmd_ini).loadCommand( $user_command )
-$Separator 	:= new TcButtonBarButton().separator()
+$Separator 	:= new TcButtonBarButton()
 $Button_empty 	:= new TcButtonBarButton().empty()
 $Button 	:= new TcButtonBarButton()
 			.cmd( "foo.bat" )

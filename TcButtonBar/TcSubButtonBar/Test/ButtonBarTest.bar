@@ -2,7 +2,7 @@
 Buttoncount=7
 button1=C:\GoogleDrive\Programs\Core\AutoHotkey\Lib\_vendor\_vilbur\total-commander\TcButtonBar\TcSubButtonBar\Test\SubButtonBarTest.ico
 cmd1=C:\GoogleDrive\Programs\Core\AutoHotkey\Lib\_vendor\_vilbur\total-commander\TcButtonBar\TcSubButtonBar\Test\SubButtonBarTest.bar
-iconic1=1
+iconic1=0
 menu1=SubButtonBarTest
 button2=%systemroot%\system32\shell32.dll,43
 cmd2=%COMMANDER_PATH%\commands\foo.bat
@@ -11,7 +11,6 @@ button3=C:\Windows\system32\shell32.dll,43
 cmd3=em_TestTcButtonBar
 menu3=Tooltip test
 param3=foo param
-button4=
 iconic4=0
 button5=%systemroot%\system32\shell32.dll,49
 cmd5=cmd.exe /c exit
