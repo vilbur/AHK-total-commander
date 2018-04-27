@@ -20,7 +20,17 @@ addCustomCommandTest()
 	Dump($Button, "Button", 1)			
 }
 
+/** CreateButtonTest
+*/
+CreateButtonTest()
+{	
+	$Button 	:= new TcButtonBarButton()
+				.cmd( "foo.bat" )
+				.icon("%systemroot%\system32\shell32.dll", 43)
+				.tooltip("Tooltip test")
 
+	Dump($Button, "Button", 1)			
+}
 
 
 /*---------------------------------------
@@ -28,3 +38,4 @@ addCustomCommandTest()
 -----------------------------------------
 */
 addCustomCommandTest()
+CreateButtonTest()

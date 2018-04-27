@@ -5,7 +5,7 @@
 Class TcButtonBarButton
 {
 	static _cmd_ini := {path:""} ; path to *.ini with command, ussually Usercmd.ini
-
+	
 	_cmd	:= ""
 	_param	:= ""	
 	_button	:= "" ; icon
@@ -23,6 +23,33 @@ Class TcButtonBarButton
 	}
 
 
+	/** If button is subbar
+	 */
+	isSubbar()
+	{
+		return RegExMatch( this._cmd, "i).bar$") 
+	}
+	/** If button is separator
+	 */
+	isSeparator()
+	{
+		return ! this._cmd && ! this._button &&  ! this._iconic &&  ! this._param
+	}
+	
+	/** Join object to string
+	  *
+	  * @param	int	$index	index of button
+	  * @return	string	Lines ready to be written to *.bar file
+	 */
+	join($index)
+	{
+		For $key, $value in this
+			if( $value )
+				$cmd_string .= RegExReplace( $key, "^_", "" ) $index "=" $value "`n"
+		
+		;return $cmd_string
+		return % SubStr( $cmd_string, 1, StrLen($cmd_string)-1 ) 
+	}
 	
 	/*---------------------------------------
 		SET\GET BUTTNO PROPERTY
@@ -43,11 +70,14 @@ Class TcButtonBarButton
 	} 
 	/** Set\Get icon
 	 */
-	button( $icon:="" )
+	button( $icon:="", $index:="" )
 	{
-		return % this._setOrGet( "_button", $icon )
+		this.set( "_button", $icon ($index?"," $index : "") )
+
+		return $value ? this : this[$key]
+		
 	}
-	/** Set\Get icon number
+	/** Options of button
 	 */
 	iconic( $iconic:="" )
 	{
@@ -59,13 +89,54 @@ Class TcButtonBarButton
 	{
 		return % this._setOrGet( "_menu", $tooltip )
 	}
+	/*---------------------------------------
+		ALIASES
+	-----------------------------------------
+	*/
+	/** Set this._button and this._iconnic
+	  *
+	  * @param	string	$icon	Path to icon
+	  * @param	int	$index	Index of icon
+	  *
+	  * @return	self
+	 */
+	icon( $icon, $index:="" )
+	{
+		this.button( $icon, $index )
+		
+		return this
+	}
+	/** Alias for this.menu()
+	 */
+	tooltip( $tooltip )
+	{
+		this.menu($tooltip)
+		
+		return this
+	}
+	
+	/*---------------------------------------
+		SET PROPERTIES
+	-----------------------------------------
+	*/
+	
 	/** Set\Get property 
 	 */
-	_setOrGet( $key, $value:="" )
-	{		
+	set( $key, $value:="" )
+	{
+		$key := RegExReplace( $key, "^_*", "_" ) 
+
 		if( $value )
 			this[$key]	:= $value
 		
+		return  this
+	} 	
+	/** Set\Get property 
+	 */
+	_setOrGet( $key, $value:="" )
+	{
+		this.set( $key, $value )
+
 		return $value ? this : this[$key]
 	} 	
 
@@ -86,7 +157,7 @@ Class TcButtonBarButton
 		For $key, $value in this
 			this._loadProperty($key)
 		
-		this._setIconFromButton()
+		;this._setIconFromButton()
 		
 		return this
 	}
@@ -99,23 +170,7 @@ Class TcButtonBarButton
 		if( $ini_value && ! this[$key] )
 			this[$key] := $ini_value
 	}
-	/** Get iconic property from button property
-	 *	  
-	 *	@example
-	 *		INPUT:
-	 *			this._button=C:\Windows\system32\shell32.dll,43
-	 *		OUTPUT:
-	 *			this._button=C:\Windows\system32\shell32.dll
-	 *			this._iconic
-	 */
-	_setIconFromButton()
-	{
-		$icon_number_pair	:= StrSplit( this._button, ",")
-		
-		this._setOrGet( "_button", $icon_number_pair[1] )
-		this._setOrGet( "_iconic", $icon_number_pair[2] )		
-	} 
-	
+
 	/*---------------------------------------
 		INI METHODS
 	-----------------------------------------

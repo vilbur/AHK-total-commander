@@ -1,0 +1,12 @@
+[Buttonbar]
+Buttoncount=3
+button1=%systemroot%\system32\shell32.dll,43
+cmd1=foo.bat
+menu1=First Button
+button2=C:\Windows\system32\shell32.dll,43
+cmd2=em_TestTcButtonBar
+menu2=Tooltip test
+param2=foo param
+button3=%systemroot%\system32\shell32.dll,43
+cmd3=foo.bat
+menu3=Last Button
