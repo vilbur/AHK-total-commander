@@ -1,10 +1,11 @@
-/** TcButtonBarButton - Button in button bar
+/** TcButtonBarButton
+ *		Button in button bar
  * 
  *  CREATE BUTTON OF TYPES:
- *		1) Custom button
- *		2) From command
- *		3) Separator
- *		4) Empty button
+ *		1. Custom button
+ *		2. From command
+ *		3. Separator
+ *		4. Empty button
  *
  * @class TcButtonBarButton( [string $file] )
  *		     
@@ -35,7 +36,7 @@ Class TcButtonBarButton extends TcCommanderPath
 	_menu	:= "" ; tooltip
 
 	/**
-	  * @param	string	$file	path to cmd.ini file or *.bar file
+	  * @param	string	$file	path to *cmd.ini file or *.bar file
 	 */
 	__New( $file:="" )
 	{
@@ -46,13 +47,13 @@ Class TcButtonBarButton extends TcCommanderPath
 	}
 	/** Load command as button from cmd.ini E.G.: Usercmd.ini
 	 *  
-	 *  @param	string	$command_name	Command name from "Usercmd.ini" E.G.: "em_custom-command"
+	 *  @param	string	$name	Command name from "Usercmd.ini" E.G.: "em_custom-command"
 	 *
 	 * @return	self	
 	 */
-	loadCommand( $command_name )
+	loadCommand( $name )
 	{
-		this.cmd( $command_name)
+		this.cmd( $name)
 		
 		For $key, $value in this
 			this._loadCommandProperty($key)
@@ -61,7 +62,7 @@ Class TcButtonBarButton extends TcCommanderPath
 	}
 	/** Load button from *.bar file
 	 *  
-	 *  @param	int	$position	Position number in *.bar file
+	 *  @param	int	$position	Position of button in *.bar file
 	 *
 	 * @return	self	
 	 */
@@ -107,28 +108,31 @@ Class TcButtonBarButton extends TcCommanderPath
 		SET\GET BUTTNO PROPERTY
 	-----------------------------------------
 	*/
-	/** Set\Get cmd property 
+	/** Set\Get cmd property
+	  * @return	self|string
 	 */
 	cmd( $cmd:="" )
 	{
 		return % this._setOrGet( "_cmd", $cmd )
 	}
 	/** Set\Get param property 
+	  * @return	self|string
 	 */
 	param( $param:="" )
 	{
 		return % this._setOrGet( "_param", $param )
 	} 
-	/** Set\Get icon
+	/** Set\Get button property 
+	  * @return	self|string
 	 */
 	button( $icon:="", $index:="" )
 	{
 		this.set( "_button", $icon ($index?"," $index : "") )
 
 		return $value ? this : this[$key]
-		
 	}
-	/** Options of button
+	/** Set\Get iconic property 
+	  * @return	self|string
 	 */
 	iconic( $iconic:="" )
 	{
@@ -139,7 +143,8 @@ Class TcButtonBarButton extends TcCommanderPath
 
 		return this
 	}
-	/** Set\Get tooltip
+	/** Set\Get menu property 
+	  * @return	self|string
 	 */
 	menu( $tooltip:="" )
 	{
@@ -149,7 +154,7 @@ Class TcButtonBarButton extends TcCommanderPath
 		ALIASES
 	-----------------------------------------
 	*/
-	/** Set this._button and this._iconnic
+	/** Set icon, alias for button()
 	  *
 	  * @param	string	$icon	Path to icon
 	  * @param	int	$index	Index of icon
@@ -162,7 +167,9 @@ Class TcButtonBarButton extends TcCommanderPath
 		
 		return this
 	}
-	/** Alias for this.menu()
+	/** Set tooltip, alias for menu()
+	  *
+	  * @return	self
 	 */
 	tooltip( $tooltip )
 	{

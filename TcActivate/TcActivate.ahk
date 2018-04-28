@@ -1,20 +1,19 @@
 /** Activate\deactivate Total Commander window.
- * Used for temporary activation of TC e.g.: for getting focused control
+ * Used for temporary activation of Total Commander  e.g.: for getting focused control
  *
- * ACTIVATE:
- *		Save active window and make it on top, then activate Total Commander window
+ * @method	void	activate( int $hwnd_tc )	Save active window and make it on top, then activate Total Commander
+ * @method	void	deactivate( int $hwnd_tc )	Restore on top state of last active window and activate it
  *
- * DEACTIVATE:
- *		Restore on top state of last active window and activate it
- *       
  */
 Class TcActivate
 {
 	_ahk_id	:= 0
 	_on_top	:= ""
 
-	/** Save active window and activate TC
-	 */
+	/** Save active window and make it on top, then activate Total Commander
+	  *
+	  * @param	int	$hwnd_tc	Hwnd of Total Commander 	  
+	  */
 	activate($hwnd_tc)
 	{
 		$hwnd_active := WinActive("A") 
@@ -27,10 +26,12 @@ Class TcActivate
 			
 		this._setActiveWindowOnTopState( "On" )
 			
-		WinActivate, ahk_id %$hwnd_tc% 
+		WinActivate, ahk_id %$hwnd_tc%
 	}
 	/** Restore always on top state of last window and activate it.
-	 */
+	  *
+	  * @param	int	$hwnd_tc	Hwnd of Total Commander 	  
+	  */
 	deactivate($hwnd_tc)
 	{
 		if ( ! this._ahk_id )

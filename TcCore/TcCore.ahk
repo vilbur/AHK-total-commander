@@ -1,4 +1,4 @@
-#Include %A_LineFile%\..\TcCommanderPath\TcCommanderPath.ahk
+#Include %A_LineFile%\..\..\TcCommanderPath\TcCommanderPath.ahk
 
 /* Class TcCore
 */

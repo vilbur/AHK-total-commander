@@ -1,6 +1,7 @@
 /** TcSubButtonBar - Button with nested button bar
- *	Set button bar as button
- *
+ * Set button bar as button
+ * Icon is assigned to button, if *.ico named as button bar exist in folder E.g.: Buttonbar.bar & Buttonbar.ico
+ * 
  * @method	self|TcButtonBar	bar( [string|object $buttonbar] )	Set\Get button bar
  * @method	self	save( [string $buttonbar_path] )	Save button bar to file
  *
@@ -12,8 +13,8 @@
  */
 Class TcSubButtonBar extends TcButtonBarButton
 {
-	_bar 	:= "" ; subbar
-	_iconic	:= 0 ; show as: bar = 0 | menu = 1
+	_bar 	:= "" ; subbar 
+	_iconic	:= 1 ; show as: bar = 0 | menu = 1
 
 	/** Get\Set TcButtonBar to button
 	  *
@@ -30,6 +31,8 @@ Class TcSubButtonBar extends TcButtonBarButton
 	}
 	/** Save buttonbar
 	  *
+	  * @param	string	$buttonbar_path	Path to button bar
+	  *	  	  
 	  * @return	self
 	 */
 	save( $buttonbar_path:="" )
@@ -52,7 +55,10 @@ Class TcSubButtonBar extends TcButtonBarButton
 	{
 		return % this.iconic( 1 )
 	}
-	/**
+	/** Set first button of subbar as reference to main buttonbar
+	  *
+	  * @param	string	$main_buttonbar_path	Path to main subbar
+	  *
 	 */
 	backButton( $main_buttonbar_path )
 	{

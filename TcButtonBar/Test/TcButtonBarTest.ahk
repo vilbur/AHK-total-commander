@@ -2,16 +2,17 @@
 
 #Include %A_LineFile%\..\..\TcButtonBar.ahk
 #Include %A_LineFile%\..\Helpers\userCommandHelpers.ahk
-/** LoadCurrentButtonBarTest
+
+/** Load Current Button Bar
 */
-LoadCurrentButtonBarTest()
+loadCurrentButtonBarTest()
 {
 	$TcButtonBar 	:= new TcButtonBar().load()
-	Dump($TcButtonBar, "TcButtonBar", 0)
+	;Dump($TcButtonBar, "TcButtonBar", 0)
 }
-/** createButtonBar
+/** Create Button Bar
 */
-createButtonBar()
+createButtonBarTest()
 {
 	$TcButtonBar 	:= getNewButtonBar()
 	;Dump($TcButtonBar._buttons, "TcButtonBar._buttons", 1)
@@ -34,5 +35,5 @@ createButtonBar()
 	 RUN TESTS
 -----------------------------------------
 */
-LoadCurrentButtonBarTest()
-createButtonBar()
+loadCurrentButtonBarTest()
+createButtonBarTest()

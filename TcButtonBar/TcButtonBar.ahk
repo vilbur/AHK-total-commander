@@ -3,7 +3,7 @@
 #Include %A_LineFile%\..\TcButtonBarButton\TcButtonBarButton.ahk
 #Include %A_LineFile%\..\TcSubButtonBar\TcSubButtonBar.ahk
 
-/** TcButtonBar - Works with *.bar file
+/** TcButtonBar - Actions with *.bar file
  *
  * @method	self	load( string $buttonbar_path )	Load button bar file
  * @method	self	save( string $buttonbar_path )	Save buttonbar
@@ -25,7 +25,7 @@ Class TcButtonBar extends TcCore
 	{
 		this.initCore()
 	}
-	/** Load button bar file
+	/** Load *.bar file
 	  *
 	  * @param	string	$buttonbar_path	If empty, current *.bar is used
 	  *
@@ -42,7 +42,7 @@ Class TcButtonBar extends TcCore
 		
 		return this  
 	}
-	/** Save buttonbar
+	/** Save button bar
 	  *
 	  * @param	string	$buttonbar_path	Path to button bar
 	 */
@@ -137,7 +137,7 @@ Class TcButtonBar extends TcCore
 		PARSE BUTTONBAR.BAR
 	-----------------------------------------
 	*/
-	/**
+	/** 
 	 */
 	_parseButtonBar()
 	{
