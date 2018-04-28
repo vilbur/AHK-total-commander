@@ -77,7 +77,7 @@ Class TcSubButtonBar extends TcButtonBarButton
 								.cmd($buttonbar_path)
 								.icon( "%Commander_Path%\wcmicons.dll,15" )								
 								.tooltip( "Back to " this._getButtonBarName( $buttonbar_path )  ), 1)
-	} 
+	}
 	/**
 	 */
 	_setBarPath( $path:="" )

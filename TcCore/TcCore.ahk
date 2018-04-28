@@ -8,9 +8,10 @@ Class TcCore extends TcCommanderPath
 	_process_name	:= ""	
 	_hwnd	:= ""
 
-	/**
+	/** Init core
+	  9 must be called in __New() mehthod in class which extends TcCore
 	 */
-	_init()
+	initCore()
 	{
 		this._setCommanderPath()
 		this._setIniFile( "wincmd.ini" )

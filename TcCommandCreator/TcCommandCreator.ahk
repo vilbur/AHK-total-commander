@@ -1,6 +1,6 @@
 #Include %A_LineFile%\..\includes.ahk
 
-/** Class TcCommandCreator
+/** Create command in Total Commander
 */
 Class TcCommandCreator
 {
@@ -18,69 +18,92 @@ Class TcCommandCreator
 	_button	:= "%systemroot%\system32\shell32.dll,43"			
 	
 	/** _setTabsPath
+	  * @param	string	$name Name of command
 	 */
-	__New()
+	__New($name:="")
 	{
 		$commander_path	= %Commander_Path%	
 		$_usercmd_ini	= %Commander_Path%\usercmd.ini		
 		this._commander_path	:= $commander_path		
-		this._usercmd_ini	:= $_usercmd_ini		
+		this._usercmd_ini	:= $_usercmd_ini
+		
+		if( $name )
+			this.name($name)
 	}
-	/** set prefix
-	  * @param	string	$prefix	for commands name, menu and tooltip text
-	 */
+	/** Set prefix for commands name, menu and tooltip text
+	  * @param	string	$prefix	
+	  *
+	  * @return	self
+	  */
 	prefix( $prefix:="" )
 	{
 		this._prefix := $prefix
 		
 		return this		
 	}
-	/**
-	  * @param	string	$name of command
-	 */
+	/** Set name of command
+	  * @param	string	$name Name of command
+	  *
+	  * @return	self
+	  */
 	name( $name )
 	{
 		this._name := $name 
 		return this 		
 	}
-	/**
+	/** Set of command
 	  * @param	string	$cmd	cmd key in Usercmd.ini
-	 */
+	  *
+	  * @return	self
+	  */
 	cmd( $cmd )
 	{
 		this._cmd := $cmd 
 		return this 		
 	}
-	/**
-	  * @param	string	$params	any numbre of prameters, param key in Usercmd.ini
-	 */
+	/** Set params of command
+	  * @param	string	$params	Any number of parmeters, param key in Usercmd.ini
+	  *
+	  * @return	self
+	  */
 	param( $params* )
 	{
 		this._params 	:= $params
 
 		return this
 	}
-	/**
-	  * @param	string	$menu	menu key in Usercmd.ini
-	 */
+	/** Set menu text of command
+	  * @param	string	$menu	Menu key in Usercmd.ini
+	  *
+	  * @return	self
+	  */
 	menu( $menu )
 	{
 		this._menu := $menu
 		
 		return this 		
-	}	
-	/**
-	  * @param	string	$tooltip	tooltip key in Usercmd.ini
-	 */
+	}
+	
+	/*---------------------------------------
+		ALIASES
+	-----------------------------------------
+	*/
+	/** Set tooltip of command
+	  * @param	string	$tooltip	Menu key in Usercmd.ini
+	  *
+	  * @return	self
+	  */
 	tooltip( $tooltip )
 	{
 		this._tooltip := $tooltip
 		
 		return this 		
 	}
-	/**
+	/** Set Icon of command
 	  * @param	string	$icon	button key in Usercmd.ini
-	 */
+	  *
+	  * @return	self
+	  */
 	icon( $icon )
 	{
 		if( $icon )
@@ -88,8 +111,14 @@ Class TcCommandCreator
 
 		return this 		
 	}
-	/** write command to Usercmd.ini
-	 */
+	/*---------------------------------------
+		COMMAND METHODS
+	-----------------------------------------
+	*/
+	/** Write command to Usercmd.ini
+	  *
+	  * @return	self
+	  */
 	create()
 	{
 		this._setSection()
@@ -104,8 +133,10 @@ Class TcCommandCreator
 		
 		return this
 	}
-	/** delete command from Usercmd.ini
-	 */
+	/** Delete command from Usercmd.ini
+	  *
+	  * @return	self
+	  */
 	delete( )
 	{
 		if( this._name )
@@ -121,6 +152,11 @@ Class TcCommandCreator
 		
 		return this._shortcut
 	}
+	
+	/*---------------------------------------
+		PRIVATE
+	-----------------------------------------
+	*/
 	/**
 	 */
 	_setSection()

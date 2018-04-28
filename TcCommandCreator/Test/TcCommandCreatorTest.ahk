@@ -2,8 +2,8 @@
 #Include %A_LineFile%\..\..\TcCommandCreator.ahk
 
 new TcCommandCreator()
-	.cmd("TcCommandCreator-minimal-config")
-	.create()
+		.cmd("TcCommandCreator-minimal-config")
+		.create()
 
 /* RESULT:
 [em_minimal-command]
@@ -14,13 +14,13 @@ new TcCommandCreator()
 */
 
 new TcCommandCreator()
-	.prefix("TcCommandCreator")
-	.name("command-paths")
-	.cmd("c:\GoogleDrive\TotalComander\Path-to-Total-Comamnder-is-escaped")
-	.param("%P", "%T")
-	.menu("Escape and add trailing slash to %P and %T params")
-	.tooltip("Toolbar text")	
-	.create()
+		.prefix("TcCommandCreator")
+		.name("command-paths")
+		.cmd("c:\GoogleDrive\TotalComander\Path-to-Total-Comamnder-is-escaped")
+		.param("%P", "%T")
+		.menu("Escape and add trailing slash to %P and %T params")
+		.tooltip("Toolbar text")	
+		.create()
 	
 /* RESULT:
 [em_TcCommand-command-paths]

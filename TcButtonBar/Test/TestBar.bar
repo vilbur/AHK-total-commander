@@ -3,10 +3,7 @@ Buttoncount=5
 button1=%systemroot%\system32\shell32.dll,43
 cmd1=%COMMANDER_PATH%\commands\foo.bat
 menu1=First Button
-button2=C:\Windows\system32\shell32.dll,43
-cmd2=em_TestTcButtonBar
-menu2=Tooltip test
-param2=foo param
+
 iconic3=0
 button4=%systemroot%\system32\shell32.dll,49
 cmd4=cmd.exe /c exit
