@@ -1,6 +1,10 @@
 #SingleInstance force
 #Include %A_LineFile%\..\..\TcCommandCreator.ahk
 
+/*---------------------------------------
+	CREATE COMMANDS
+-----------------------------------------
+*/
 new TcCommandCreator()
 		.cmd("TcCommandCreator-minimal-config")
 		.create()
@@ -29,4 +33,11 @@ new TcCommandCreator()
 	param="%P\" "%T\"      
 	tooltip=TcCommandCreator - Toolbar text
 	button=%systemroot%\system32\shell32.dll,43
-*/ 
+*/
+
+/*---------------------------------------
+	DELETE COMMANDS
+-----------------------------------------
+*/
+;new TcCommandCreator("em_TcCommandCreator-minimal-config").delete()
+;new TcCommandCreator("em_TcCommandCreator-command-paths").delete()

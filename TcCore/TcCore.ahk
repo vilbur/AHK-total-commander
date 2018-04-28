@@ -46,35 +46,6 @@ Class TcCore extends TcCommanderPath
 	}
 
 	/*---------------------------------------
-		INI FILE
-	-----------------------------------------
-	*/
-	/** Set ini file as property
-	 *  
-	 * @param	string	$ini_file	Relative path to file in Total Commander 
-	 * @param	string	$key	Key to save to this object, if empty then sanitized ini file name is used E.G.: "wincmd.ini" WILL BE this._wincmd_ini
-	 *
-	 */
-	_setIniFile( $ini_file, $key:="" )
-	{
-		
-		if( ! $key )
-		{
-			SplitPath, $ini_file, $filename
-			$key := "_" RegExReplace( $filename, "\.", "_" )
-		}
-		
-		this[$key] := this.getIniFile( $ini_file )
-	}
-	/**
-	 */
-	getIniFile( $ini_file )
-	{
-		$ini_file_path	= %Commander_Path%\%$ini_file%
-
-		return $ini_file_path	
-	} 
-	/*---------------------------------------
 		COMMANDS
 	-----------------------------------------
 	*/

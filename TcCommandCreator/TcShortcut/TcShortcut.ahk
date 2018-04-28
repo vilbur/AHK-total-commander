@@ -1,81 +1,129 @@
+#Include %A_LineFile%\..\includes.ahk
 /** Class TcShortcut
 */
-Class TcShortcut
+Class TcShortcut extends TcCommanderPath
 {
-	_wincmd_ini	:= "" ; set keyboard shortcuts
 	_name	:= "" ; name of command
 	_section	:= "Shortcuts"
-	_keys	:= []	
-
-	/** _setTabsPath
-	 */
-	__New()
+	_keys	:= []
+	_force	:= false
+	
+	/**
+	  * @param	string	$name Name of command
+	  */
+	__New($name:="")
 	{
-		$_wincmd_ini	= %Commander_Path%\wincmd.ini
-		this._wincmd_ini	:= $_wincmd_ini
+		this._setCommanderPath()
+		this._setIniFile("usercmd.ini")
+		this._setIniFile("wincmd.ini")		
+		
+		if( $name )
+			this.name($name)
 	}
 	/**
 	 */
 	name( $name )
 	{
 		this._name := $name
-		this._shortcut 	:= new TcShortcut($name)
 		return this 		
 	}
-	/**
+	/** Set control keys
+	 * @param	string	$keys	Key for shortcut
 	 */
-	keys( $keys )
+	keys( $keys* )
 	{
 		For $k, $key in $keys
 			if( RegExMatch( $key, "i)win" ) )
 				this._section := "ShortcutsWin"
 				
-			;else if( RegExMatch( $key, "i)(ctr|control|alt|shift)" ) )
-				;this._keys.push(SubStr($key, 1, 1))
-
+			else if $key is number
+				this._force := $key
+				
 			else
 				this._keys.push($key)
 
+		;this._setKeys($keys*)
+
+		this.create()
+		
 		return this
 	}
 	/** create keyboard shortcut to run this._cmd_load_tabs command
 		create keyboard shortcut in section "ShortcutsWin"
 		section "ShortcutsWin" runs keyboard shortcuts with win key 
 	 */
-	create( $force:=false )
+	create()
 	{
 		$shortcut := this._getShortcut()
-		IniRead, $exists, % this._wincmd_ini, % this._section, %$shortcut%, NOT
-		
-		if( $exists=="NOT" || $force!=false )
-			IniWrite, % this._name, % this._wincmd_ini, % this._section, % this._getShortcut()
-		else
-			MsgBox,262144,, % "SHORTCUT ALREADY EXISTS`n`n" $shortcut
+
+		if( this._ifCommandExists() && (  this._force || this._ifShortcutDoesNotExists($shortcut) ) )
+			IniWrite, % this._name, % this._wincmd_ini, % this._section, %$shortcut%
 	}
+	
 	/** Delete shorcut
 		Find command name in section and delete it
 	 */
 	delete()
 	{
 		For $s, $section in ["Shortcuts","ShortcutsWin"]
-			IniRead, $sections, % this._wincmd_ini, %$section%
+			IniRead, $sections, % this._usercmd_ini, %$section%
 				loop, Parse, $sections, `n
 					if( RegExMatch( A_LoopField, "i)^([^\=]+)\=" this._name, $key_match ) )
-						IniDelete,  % this._wincmd_ini, %$section%, %$key_match1% 
+						IniDelete,  % this._usercmd_ini, %$section%, %$key_match1% 
 	}
 
+	/**
+	 */
+	_ifCommandExists()
+	{
+		IniRead, $exist_cmd,	% this._usercmd_ini,	% this._name
+		
+		if( ! $exist_cmd )
+			this.exit("COMMAND DOES NOT EXISTS:`n`n" this._name )
+		
+		return $exist_cmd ? true :false
+	}
+	/**
+	 */
+	_ifShortcutDoesNotExists($shortcut)
+	{
+		IniRead, $exist_shortcut,	% this._wincmd_ini,	% this._section, %$shortcut%, 0
+		
+		;MsgBox,262144,exist_shortcut, %$exist_shortcut%,3 
+		if( $exist_shortcut )
+			MsgBox,262144,, % "SHORTCUT ALREADY EXISTS`n`n" this._joinKeys()
+		
+		return % ! $exist_shortcut
+	}
+	
 	/**
 	 */
 	_getShortcut()
 	{
 		For $i, $key in this._keys
-			$keys .= RegExMatch( $key, "i)(ctr|control|alt|shift)" ) ? SubStr($key, 1, 1) : "+" $key
+			if( ! InStr( $key, "win" ) )
+				$keys .= RegExMatch( $key, "i)(ctr|control|alt|shift)" ) ? SubStr($key, 1, 1) : "+" $key
 		
 		return %$keys% 
-	} 
-	
-
-
+	}
+	/**
+	 */
+	_joinKeys()
+	{
+		For $i, $key in this._keys
+			$keys .=  $key "+"
+		
+		$keys := SubStr( $keys, 1, StrLen($keys)-1 ) 
+		
+		return $keys 
+	}
+	/** Exit script with message
+	 */
+	exit( $message  )
+	{
+		MsgBox,262144, TcShortcut, %$message%
+		return
+	}
 	
 }
 

@@ -2,10 +2,9 @@
 
 /** Create command in Total Commander
 */
-Class TcCommandCreator
+Class TcCommandCreator extends TcCommanderPath
 {
-	_commander_path	:= ""	
-	_usercmd_ini	:= "" ; save 
+	_shortcut 	:= new TcShortcut()
 	
 	_prefix	:= ""	
 	_name	:= ""
@@ -15,17 +14,15 @@ Class TcCommandCreator
 	_param	:= ""
 	_menu	:= ""	
 	_tooltip	:= ""	
-	_button	:= "%systemroot%\system32\shell32.dll,43"			
+	_button	:= "%systemroot%\system32\shell32.dll,43"
 	
-	/** _setTabsPath
+	/**
 	  * @param	string	$name Name of command
-	 */
+	  */
 	__New($name:="")
 	{
-		$commander_path	= %Commander_Path%	
-		$_usercmd_ini	= %Commander_Path%\usercmd.ini		
-		this._commander_path	:= $commander_path		
-		this._usercmd_ini	:= $_usercmd_ini
+		this._setCommanderPath()
+		this._setIniFile("usercmd.ini")
 		
 		if( $name )
 			this.name($name)
@@ -147,8 +144,10 @@ Class TcCommandCreator
 	 */
 	shortcut( $keys* )
 	{
+		this._shortcut.name(this.this._getSectionName())
+		
 		if( $keys )
-			return % this._shortcut.keys($keys)
+			return % this._shortcut.keys($keys*)
 		
 		return this._shortcut
 	}
@@ -159,12 +158,17 @@ Class TcCommandCreator
 	*/
 	/**
 	 */
-	_setSection()
+	_getSectionName()
 	{
 		$prefix_sanitized	:= RegExReplace( this._prefix, "\s+", "_" )
 		$prefix_name	:= $prefix_sanitized ? $prefix_sanitized "-" : $prefix_sanitized
-		;$cmd_name	:= this._name ? RegExReplace( this._name, "[-\s\\\/]+", "-" ) : this._cmd
-		this._section := "em_" $prefix_name this._getCmdName()
+		return % "em_" $prefix_name this._getCmdName()
+	} 
+	/**
+	 */
+	_setSection()
+	{
+		this._section := this._getSectionName()
 	} 
 	/**
 	 */
@@ -211,7 +215,7 @@ Class TcCommandCreator
 	 */
 	_getCmdValue()
 	{
-		return this._replaceCommanderPathEnvVariable(this._cmd)
+		return this.pathEnv(this._cmd)
 	}
 	/**
 	 */
@@ -233,21 +237,13 @@ Class TcCommandCreator
 	 */
 	_getButtonValue()
 	{
-		return this._replaceCommanderPathEnvVariable(this._button)
+		return this.pathEnv(this._button)
 	}	
 	/*---------------------------------------
 		HELPERS
 	-----------------------------------------
 	*/
-	
-	/** Replace path to %COMMANDER_PATH% back
-			E.G.: "C:\TotalCommander" >>> "%COMMANDER_PATH%"
-	 */
-	_replaceCommanderPathEnvVariable( $path )
-	{
-		$commander_path_rx := RegExReplace( this._commander_path, "i)[\\\/]+", "\\" )
-		return % RegExReplace( $path, "i)" $commander_path_rx, "%COMMANDER_PATH%" ) 
-	}
+
 	/** escape and quote %T & %P parameter
 	 */
 	_escapeParameter( $param )

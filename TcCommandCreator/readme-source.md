@@ -1,15 +1,13 @@
 # TcCommandCreator  
 * Create command in Total Commander  
 
-## Parameters methods  
-
+## Constructor  
 
 | __TcCommandCreator__( [$name] )	|Constructor	|  
 |:---	|:---	|  
 |`@param string` [ $name="" ]	|Name of command	|  
 
-##  
-
+## Parameters methods  
 
 | __prefix__( [$prefix] )	|Set prefix for commands name, menu and tooltip text	|  
 |:---	|:---	|  
