@@ -56,4 +56,7 @@ __Get TcButtonBar object__
 
 __Save\load button bars__  
 [include:\Test\TcButtonBarTest.ahk]  
+
+
+
   
