@@ -7,7 +7,7 @@ Class TcCommandCreator extends TcCommanderPath
 	_shortcut 	:= new TcShortcut()
 	
 	_prefix	:= ""	
-	_name	:= ""
+	_name	:= "" ; name of command WITHOUT PREFIX "em_"
 	_section	:= ""		
 	
 	_cmd	:= ""		
@@ -45,7 +45,7 @@ Class TcCommandCreator extends TcCommanderPath
 	  */
 	name( $name )
 	{
-		this._name := $name 
+		this._name := RegExMatch( $name, "^em_" ) ? SubStr( $name, 4 )  : "em_" $name
 		return this 		
 	}
 	/** Set of command
@@ -140,16 +140,21 @@ Class TcCommandCreator extends TcCommanderPath
 			IniDelete, % this._usercmd_ini, % this._name
 		return this
 	}
-	/**
+	/** Create keyboard shortcut or get TcShortcut if params are empty
+	 *
+	 * @param	string	$keys*	Keys for shortcut
+	 * @return	self|[TcShortcut](/TcShortcut)
 	 */
 	shortcut( $keys* )
 	{
-		this._shortcut.name(this.this._getSectionName())
+		if( ! $keys.length() )
+			return this._shortcut
 		
-		if( $keys )
-			return % this._shortcut.keys($keys*)
+		this._shortcut.name(this._getSectionName())
 		
-		return this._shortcut
+		this._shortcut.shortcut($keys*)
+		
+		return % this
 	}
 	
 	/*---------------------------------------

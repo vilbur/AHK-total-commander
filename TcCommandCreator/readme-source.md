@@ -1,3 +1,4 @@
+##  
 # TcCommandCreator  
 * Create command in Total Commander  
 
@@ -70,6 +71,14 @@
 |`@return self`	|	|  
 
 ##  
+
+| __shortcut__( [$keys*] )	|Create keyboard shortcut or get TcShortcut if params are empty	|  
+|:---	|:---	|  
+|`@param string` [ $keys* ]	|Keys for shortcut	|  
+|`@return self|[TcShortcut](/TcShortcut)`	|	|  
+
+##  
+
 
 
 ## Examples  
