@@ -9,4 +9,4 @@ $user_command	:= "em_TestTcButtonBar"/** Get New ButtonBar*/getNewButtonBar(
 }/** Create Button Bar*/createButtonBarTest(){	$TcButtonBar 	:= getNewButtonBar()
 	/* ADD BUTTONS	  */	$TcButtonBar.button( new TcButtonBarButton().tooltip("Button To Delete"), 2 )				/* REMOVE BUTTONS	*/	$TcButtonBar.remove(2)	/* SAVE	*/	$TcButtonBar.save(A_ScriptDir "\TestBar.bar")
 }/*---------------------------------------	 RUN TESTS-----------------------------------------*/loadCurrentButtonBarTest()createButtonBarTest()
-```    
+```    

@@ -20,11 +20,11 @@ Class TcActivate
 		
 		if( this._isTotalCommanderActive( $hwnd_tc, $hwnd_active ) )
 			return % this._resetWinData()
-
+		
 		this._saveActiveAhkId( $hwnd_active )
-		this._saveActiveOnTopState()		
-			
-		this._setActiveWindowOnTopState( "On" )
+		;this._saveActiveOnTopState()		
+
+		;this._setActiveWindowOnTopState( "On" )
 			
 		WinActivate, ahk_id %$hwnd_tc%
 	}
@@ -37,9 +37,9 @@ Class TcActivate
 		if ( ! this._ahk_id )
 			return
 
-		WinActivate, % "ahk_id " this._ahk_id
+		WinActivate, % this._ahkId()
 
-		this._setActiveWindowOnTopState( this._on_top ? "On" : "Off" )
+		;this._setActiveWindowOnTopState( this._on_top ? "On" : "Off" )
 	}
 	/**
 	 */
