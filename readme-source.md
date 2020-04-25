@@ -1,19 +1,3 @@
-# TcCore  
+# AHK-total-commander  
 
-Activate\deactivate Total Commander window.  
-Used for temporary activation of Total Commander  e.g.: for getting focused control  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
+Autohotkey scripts for Total Commander  
