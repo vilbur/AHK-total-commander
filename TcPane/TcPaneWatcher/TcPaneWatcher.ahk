@@ -1,13 +1,14 @@
 #SingleInstance force
 #NoTrayIcon
+;Menu, Tray, Icon, %A_LineFile%\..\ico\TcPaneWatcher.ico,, ;;; Show icon for debbuging
 
 global $TcPaneWatcher
 global $CLSID
 
 /** Watch Total Commander and get source pane every time Total commander lost focus
  *
- *	Script has own file because of it use OnMessage(), in this way OnMessage does not collide with others OnMessages
- *	TcPaneWatcher is accesable via ComObject
+ *	TcPaneWatcher has its own file, reason is that it use OnMessage(), in this way OnMessage does not collide with others OnMessages  
+ *	TcPaneWatcher is accessible via ComObject
  * 
  * @param	{hwnd:control_class}	_active_panes	store last used control class, key is hwnd of Total Commander (for use on multiple instances)
  *

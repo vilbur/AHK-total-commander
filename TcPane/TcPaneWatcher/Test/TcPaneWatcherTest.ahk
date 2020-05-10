@@ -1,9 +1,13 @@
 #SingleInstance force
 
-/** HOW TO TEST:
-  *	1) Run this file in Total Commander  
-  *	2) Focus any other window
-  *	3) Message with classNN of last focused pane will appear
+/** Purpose of test: Get focused control (file list) when Total commander window lost focus
+  *
+  *
+  *
+  * HOW TO TEST:
+  *		1) Run this file in Total Commander  
+  *		2) Focus any other window
+  *		3) ClassNN of last focused pane will be writen in log.txt
   *       
  */
 global $TcPaneWatcherCom
@@ -13,7 +17,11 @@ global $last_win
 $CLSID	:= "{6B39CAA1-A320-4CB0-8DB4-352AA81E460E}"
 
 
-/** Get focused control (file list) when Total commander window lost focus
+/** Set TcPaneWatcher to global variable
+  *
+  * If TcPaneWatcher is not runnning, then start it and Set 
+  *
+  *
   *
  */  
 setPaneWatcher()
@@ -28,22 +36,27 @@ setPaneWatcher()
 		
 		if( $TcPaneWatcherCom )
 			$TcPaneWatcherCom.hwnd($hwnd)
+			
+		;MsgBox,262144,, Watcher exists,2 
 	}
 	catch
 	{
 		runPaneWatcher($hwnd)
+		
+		sleep, 100 ;;; Wait, ither wise watcher is executed multiple times
+		
+		setPaneWatcher()
 	}
 	
 }
-/** Get focused control (file list) when Total commander window lost focus
+/** 
   * 
  */  
 runPaneWatcher($hwnd)
 {	
 	Run, %A_LineFile%\..\..\TcPaneWatcher.ahk %$hwnd% %$CLSID%
 
-	setPaneWatcher()
-
+	;setPaneWatcher()
 }
 /**  
  */

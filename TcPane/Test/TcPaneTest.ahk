@@ -57,21 +57,24 @@ setActivatePaneTest()
 	
 	sleep, 1000
 	$TcPane.activePane("target")
+	
+	sleep, 1000
+	MsgBox,262144,, Total commander has set focus to panes 4x times,2 
 }
 
 /**
  * 1) create test file in target pane
  * 2) refresh target pane 	
- * 3) delete test file
+ * 3) after 3seconds test file is deleted
  */
 refreshPaneTest()
 {
-	$test_file := $TcPane.getPath("target") "\test.txt"
+	$test_file := $TcPane.getPath("target") "\REFRESH_PANE_TEST.txt"
 	FileAppend, "", %$test_file% 
 	
 	$TcPane.refresh("target")
 	
-	sleep, 1000
+	sleep, 3000
 	FileDelete, %$test_file%
 	
 	$TcPane.refresh("target")

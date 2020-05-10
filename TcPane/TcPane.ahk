@@ -200,7 +200,7 @@ Class TcPane extends TcControlClasses
 		$hwnd := this._hwnd
 		
 		Run, %A_LineFile%\..\TcPaneWatcher\TcPaneWatcher.ahk %$hwnd% %$CLSID%
-		sleep, 50
+		sleep, 200
 		;this._setTcPaneWatcher()
 		this._TcPaneWatcher := ComObjActive($CLSID).hwnd(this._hwnd)
 
