@@ -27,11 +27,11 @@ getPathControlHwnd()
 */
 getPathTest()
 {
-	Dump($TcPane.getPath("source"), "getPath('source')", 1)
-	Dump($TcPane.getPath("target"), "getPath('target')", 1)
+	Dump($TcPane.getPath("source"),	"getPath('source')", 1)
+	Dump($TcPane.getPath("target"),	"getPath('target')", 1)
 	;
-	Dump($TcPane.getPath("left"), "getPath('left')", 1)
-	Dump($TcPane.getPath("right"), "getPath('right')", 1)
+	Dump($TcPane.getPath("left"), "  getPath('left')", 1)
+	Dump($TcPane.getPath("right"), " getPath('right')", 1)
 }
 
 /* Get Active pane
@@ -84,7 +84,7 @@ refreshPaneTest()
  */
 ;getClassTest()
 ;getPathControlHwnd()
-;getPathTest()
+getPathTest()
 ;getActivatePaneTest()
 ;setActivatePaneTest()
 ;refreshPaneTest()

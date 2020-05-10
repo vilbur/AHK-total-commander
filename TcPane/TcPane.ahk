@@ -62,18 +62,19 @@ Class TcPane extends TcControlClasses
 		return this
 	}
 
-	/** refresh pane
+	/** Refresh pane
+	 * 	Get current path and browse it again
 	 * 
 	 * @param string pane 'left|right|source|target'
 	 */
 	refresh($pane:="source")
 	{
 		$process_name	:= this._process_name
-		$dir	:= this.getPath($pane)
+		$dir	:= """" . this.getPath($pane) . """"
 		$pane	:= $pane == "source" ? "L" : "R"
 		
 		Run, %COMMANDER_PATH%\%$process_name% /O /S /%$pane%=%$dir%
-		
+
 		return this  
 	}
 	/**
@@ -179,18 +180,19 @@ Class TcPane extends TcControlClasses
 	 */  
 	_setTcPaneWatcher()
 	{
-		;if( ! this._TcPaneWatcher )
-		;	try
-		;	{
-		;		this._TcPaneWatcher := ComObjActive($CLSID).hwnd(this._hwnd)
-		;	}
-		;	catch
-		;	{
+		if( ! this._TcPaneWatcher )
+			try
+			{
+				this._TcPaneWatcher := ComObjActive($CLSID).hwnd(this._hwnd)
+			}
+			catch
+			{
 				this._runTcPaneWatcher()
-		;	}
-			
-		;if( ! this._TcPaneWatcher )
-			;this._runTcPaneWatcher()
+				
+				sleep, 100
+				
+				this._setTcPaneWatcher()
+			}
 	}
 	/** Get focused control (file list) when Total commander window lost focus
 	  * 
@@ -200,10 +202,6 @@ Class TcPane extends TcControlClasses
 		$hwnd := this._hwnd
 		
 		Run, %A_LineFile%\..\TcPaneWatcher\TcPaneWatcher.ahk %$hwnd% %$CLSID%
-		sleep, 200
-		;this._setTcPaneWatcher()
-		this._TcPaneWatcher := ComObjActive($CLSID).hwnd(this._hwnd)
-
 	}
 	/**
 	 */
